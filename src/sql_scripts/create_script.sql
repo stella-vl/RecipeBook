@@ -1,4 +1,4 @@
-create database bank_ms;
+create database recipebbok;
 
 create table users (
 id int not null primary key auto_increment,

@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package bg.smg.bankapp_nb.frames;
+package frames;
 
-/**
- *
- * @author n.m.borisova
- */
 public class ForgottenPassword extends javax.swing.JFrame {
 
     /**
