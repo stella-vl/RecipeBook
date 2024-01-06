@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bg.smg.frames;
 
 import bg.smg.model.User;
@@ -14,18 +9,13 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.util.Base64;
 
-/**
- *
- * @author n.m.borisova
- */
 public class LoginForm extends javax.swing.JFrame {
 
     UserServiceI userService;
-    /**
-     * Creates new form LoginForm
-     */
+    
     public LoginForm() {
         initComponents();
+        setTitle("Книга с рецепти");
         try {
             userService = new UserService();
         } catch (SQLException ex) {
@@ -163,15 +153,13 @@ public class LoginForm extends javax.swing.JFrame {
          try {
             String username = jTextField1.getText();
             String password = String.valueOf(jPasswordField1.getPassword());
-                    //.getPassword().toString();
-       
             User user = userService.getUserByUsername(username);
             String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes());
+            
             boolean loginSuccessful = false;
             if(user != null && encodedPassword.equals(user.getPassword())){
                 loginSuccessful = true;
             }
-            
             
             if(loginSuccessful){
                 this.setVisible(false);
@@ -211,36 +199,10 @@ public class LoginForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+   
    
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        
+  
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {

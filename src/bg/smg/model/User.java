@@ -1,7 +1,6 @@
 package bg.smg.model;
 
 import java.sql.Timestamp;
-import java.util.Base64;
 
 public class User {
     private String username;

@@ -1,7 +1,6 @@
 package bg.smg.util;
 
 import org.mariadb.jdbc.MariaDbDataSource;
-
 import javax.sql.DataSource;
 import java.sql.SQLException;
 

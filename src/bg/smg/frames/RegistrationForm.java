@@ -1,34 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bg.smg.frames;
 
 import bg.smg.model.User;
 import bg.smg.services.UserService;
-import bg.smg.services.UserServiceI;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.util.Base64;
 
-/**
- *
- * @author n.m.borisova
- */
-public class RegistrationForm extends javax.swing.JFrame {
-
-    /**
-     * Creates new form RegistrationForm
-     */
-    
-    UserServiceI userService;
-    
+public class RegistrationForm extends javax.swing.JFrame  {
+    UserService userService;
     public RegistrationForm() {
         initComponents();
-        setTitle("Банково приложение");
+        setTitle("Книга с рецепти");
     }
 
     /**
@@ -142,54 +126,45 @@ public class RegistrationForm extends javax.swing.JFrame {
         //code for DB save of user
         
         try {
+            userService = new UserService();
         String username = jTextField1.getText();
         String password1 = String.valueOf(jPasswordField1.getPassword());
         String password2 = String.valueOf(jPasswordField2.getPassword());
-                   
-       
-        User user = userService.getUserByUsername(username);
-        String encodedPassword = Base64.getEncoder().encodeToString(password1.getBytes());
         
-        boolean registrationSuccessful = false;
-        if(password1.equals(password2) && user == null){
-            registrationSuccessful = true;
-        } else if(user != null){
-            JOptionPane.showMessageDialog(this,
-                    "Това потребителско име е вече заето. Моля въведете друго потребителско име!",
-                    "Неуспешна регистрация",
-                    JOptionPane.WARNING_MESSAGE);
-        } else if(!password1.equals(password2)){
-            JOptionPane.showMessageDialog(this,
-                    "Несъответстващи пароли, моля проверете въведените от Вас данни!",
-                    "Неуспешна регистрация",
-                    JOptionPane.WARNING_MESSAGE);
-        }
+        User user = new User();
+        User userProof = userService.getUserByUsername(username);
+            if(userProof != null){
+                throw new SQLException("Това потребителско име е вече заето. Моля въведете друго потребителско име!");
+            } else if(!password1.equals(password2)){
+                throw new SQLException("Несъответстващи пароли, моля проверете въведените от Вас данни!");
+            } else if(username.equals("") || password1.equals("")){
+                throw new SQLException("Попълнете необходимите полета.");
+            } else {
+                
+            user.setUsername(username);
+            user.setPassword(Base64.getEncoder().encodeToString(password1.getBytes()));
             
-            
-            if(registrationSuccessful){
-            //
+            userService.registerUser(user);
                 JOptionPane.showMessageDialog(this,
                     "Успешнa регистрация",
                     "Успешна регистрация",
                     JOptionPane.WARNING_MESSAGE);
-            }
             
             this.setVisible(false);
             LoginForm lf = new LoginForm();
-            lf.setVisible(true);
+            lf.setVisible(true);  
+            }
             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this,
-                    "Грешка при извличане на потребител от базата данни.",
+                    ex.getMessage(),
                     "Грешка!",
                     JOptionPane.WARNING_MESSAGE);
             Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
