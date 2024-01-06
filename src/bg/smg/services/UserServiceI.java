@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package bg.smg.services;
 
 
@@ -12,7 +8,8 @@ import bg.smg.model.User;
 import java.sql.SQLException;
 
 public interface UserServiceI {
-    public void saveUser(User user);
+    public void registerUser(User user) throws SQLException;
+    public void updateUser(User user) throws SQLException;
     public User getUser(int id);
     public User getUserByUsername(String username) throws SQLException;
     public boolean verifyUser(User user) throws SQLException;

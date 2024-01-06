@@ -1,24 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bg.smg.services;
-
-/**
- *
- * @author n.m.borisova
- */
 
 import bg.smg.model.User;
 import bg.smg.util.DBManager;
-
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UserService implements UserServiceI {
     private DataSource dataSource;
@@ -27,11 +18,53 @@ public class UserService implements UserServiceI {
     public UserService() throws SQLException {
         dataSource = DBManager.getInstance().getDataSource();
     }
+    
     @Override
-    public void saveUser(User user) {
-
+    public void registerUser(User user) throws SQLException {
+        try {
+            this.connection = dataSource.getConnection();
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO `users`(`username`, `password`) VALUES ('"+user.getUsername()+"', '"+user.getPassword()+"')")) {
+                statement.executeQuery();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (connection != null) {
+                System.out.println("Closing database connection...");
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.out.println("Connection valid: " );
+            }
+        }
     }
-
+    
+    @Override
+    public void updateUser(User user) throws SQLException{
+    try {
+            this.connection = dataSource.getConnection();
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE `users` SET `password`='"+user.getPassword()+"' WHERE `username`='"+user.getUsername()+"'")) {
+                statement.executeQuery();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (connection != null) {
+                System.out.println("Closing database connection...");
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.out.println("Connection valid: " );
+            }
+        }
+    }
+    
     @Override
     public User getUser(int id) {
         return null;
@@ -65,18 +98,19 @@ public class UserService implements UserServiceI {
         return null;
     }
 
-    public String encode(String password){
-        String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes());
-        return encodedPassword;
-    }
-
+    @Override
     public boolean verifyUser(User user) throws SQLException {
         User registeredUser = getUserByUsername(user.getUsername());
-        String encodedPwd = encode(user.getPassword());
+        String encodedPwd = encodePassword(user.getPassword());
         if(registeredUser != null && registeredUser.getPassword().equals(encodedPwd))
             return true;
         else
             return false;
+    }
+    
+    public String encodePassword(String password){
+        String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes());
+        return encodedPassword;
     }
 
     public String decodePassword(String passwordToDecode){

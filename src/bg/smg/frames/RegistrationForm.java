@@ -1,22 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bg.smg.frames;
 
-/**
- *
- * @author n.m.borisova
- */
-public class RegistrationForm extends javax.swing.JFrame {
+import bg.smg.model.User;
+import bg.smg.services.UserService;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import java.util.Base64;
 
-    /**
-     * Creates new form RegistrationForm
-     */
+public class RegistrationForm extends javax.swing.JFrame  {
+    UserService userService;
     public RegistrationForm() {
         initComponents();
-        setTitle("Банково приложение");
+        setTitle("Книга с рецепти");
     }
 
     /**
@@ -40,21 +36,25 @@ public class RegistrationForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Sitka Subheading", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Регистрация");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Sitka Heading", 2, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Банково приложение");
+        jLabel2.setText("Книга с рецепти");
 
+        jLabel3.setFont(new java.awt.Font("Sitka Text", 0, 12)); // NOI18N
         jLabel3.setText("Парола:");
 
+        jLabel4.setFont(new java.awt.Font("Sitka Text", 0, 12)); // NOI18N
         jLabel4.setText("Потребителско име:");
 
-        jLabel5.setText("Повторете парола:");
+        jLabel5.setFont(new java.awt.Font("Sitka Text", 0, 12)); // NOI18N
+        jLabel5.setText("Повторете паролата:");
 
-        jButton1.setText("Регистрирай");
+        jButton1.setFont(new java.awt.Font("Sitka Text", 0, 12)); // NOI18N
+        jButton1.setText("Регистрирай се");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -67,29 +67,24 @@ public class RegistrationForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordField1)
-                            .addComponent(jPasswordField2)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jTextField1)
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                    .addComponent(jPasswordField2, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(44, 44, 44))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(154, 154, 154)
-                        .addComponent(jButton1)))
+                .addGap(131, 131, 131)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(141, 141, 141))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(76, Short.MAX_VALUE)
@@ -113,14 +108,14 @@ public class RegistrationForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(29, 29, 29)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(222, Short.MAX_VALUE)))
+                    .addContainerGap(212, Short.MAX_VALUE)))
         );
 
         pack();
@@ -129,14 +124,47 @@ public class RegistrationForm extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         //code for DB save of user
-        this.setVisible(false);
-        LoginForm lf = new LoginForm();
-        lf.setVisible(true);
+        
+        try {
+            userService = new UserService();
+        String username = jTextField1.getText();
+        String password1 = String.valueOf(jPasswordField1.getPassword());
+        String password2 = String.valueOf(jPasswordField2.getPassword());
+        
+        User user = new User();
+        User userProof = userService.getUserByUsername(username);
+            if(userProof != null){
+                throw new SQLException("Това потребителско име е вече заето. Моля въведете друго потребителско име!");
+            } else if(!password1.equals(password2)){
+                throw new SQLException("Несъответстващи пароли, моля проверете въведените от Вас данни!");
+            } else if(username.equals("") || password1.equals("")){
+                throw new SQLException("Попълнете необходимите полета.");
+            } else {
+                
+            user.setUsername(username);
+            user.setPassword(Base64.getEncoder().encodeToString(password1.getBytes()));
+            
+            userService.registerUser(user);
+                JOptionPane.showMessageDialog(this,
+                    "Успешнa регистрация",
+                    "Успешна регистрация",
+                    JOptionPane.WARNING_MESSAGE);
+            
+            this.setVisible(false);
+            LoginForm lf = new LoginForm();
+            lf.setVisible(true);  
+            }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Грешка!",
+                    JOptionPane.WARNING_MESSAGE);
+            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
