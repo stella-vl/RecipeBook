@@ -167,8 +167,8 @@ public class LoginForm extends javax.swing.JFrame {
                     "Успешно влизане",
                     "Успешно влизане",
                     JOptionPane.WARNING_MESSAGE);
-                MainFrame mf = new MainFrame();
-                mf.setVisible(true);
+                MainMenu mm = new MainMenu();
+                mm.setVisible(true);
             } else {
                     JOptionPane.showMessageDialog(this,
                     "Моля въведете правилните потребител и парола!",

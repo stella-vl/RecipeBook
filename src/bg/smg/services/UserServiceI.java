@@ -1,8 +1,6 @@
 
 package bg.smg.services;
 
-
-
 import bg.smg.model.User;
 
 import java.sql.SQLException;
