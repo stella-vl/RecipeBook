@@ -7,6 +7,8 @@ package bg.smg.frames;
 
 import bg.smg.model.Recipe;
 import bg.smg.services.RecipeService;
+import bg.smg.services.UserService;
+import bg.smg.util.DBManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,8 +25,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import javax.sql.DataSource;
 
 /**
  *
@@ -39,6 +43,8 @@ public class MainMenu extends javax.swing.JFrame {
     Recipe recipe = new Recipe();
     ImageIcon imgIcon;
     String imgName;
+    private DataSource dataSource;
+    private Connection connection;
             
     public MainMenu() {
         initComponents();
@@ -452,19 +458,24 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel2.setVisible(true);
         jPanel3.setVisible(false);
         jPanel4.setVisible(false);
+        jPanel5.setVisible(true);
         
         ArrayList<Recipe> recipes = new ArrayList<>();
         int i = 0;
         try {
-            RecipeService recipeService = new RecipeService();
-                Connection connection = recipeService.getConnection();
+        RecipeService recipeService = new RecipeService();
+        dataSource = DBManager.getInstance().getDataSource();
+        connection = dataSource.getConnection();
         Statement s = connection.createStatement();
         ResultSet p = s.executeQuery("SELECT * FROM `recipes`");
         
+        System.out.println(p);
+
+        Recipe rec;
         while(p.next()) {
             i++;
             
-            Recipe rec = new Recipe();
+            rec = new Recipe();
             rec.setName(p.getString("recipeName"));
             rec.setCookingSteps(p.getString("cookingSteps"));
             rec.setDifficulty(p.getString("difficulty"));
@@ -478,12 +489,43 @@ public class MainMenu extends javax.swing.JFrame {
     } catch (java.sql.SQLException ex) {
 
     }
-        
-        for (int j = 0; j < i; j ++) {
-            jPanel2.add(new MyPanel(recipes.get(j)));
+        System.out.println(recipes.get(1));
+        try {
+            jPanel5.add(new RecipePreviewPanel());
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-        for(Recipe r:recipes){
-            jPanel5.add(new RecipePreviewPanel(recipeService, r));
+        try {
+            jPanel5.add(new RecipePreviewPanel());
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            jPanel2.add(new RecipePreviewPanel());
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Recipe rec = new Recipe();
+            rec.setName("recipeName");
+            rec.setCookingSteps("cookingSteps");
+            rec.setDifficulty("difficulty");
+            rec.setCookingTime("cookingTime");
+            rec.setIngredients("ingredientse");
+            
+            recipes.add(rec);
+        try {
+            jPanel5.add(new RecipePreviewPanel(rec));
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            System.out.println(recipes.get(0));
+        
+        for(Recipe r: recipes){
+            try {
+                jPanel5.add(new RecipePreviewPanel(r));
+            } catch (SQLException ex) {
+                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jMenu2MouseClicked
 
@@ -626,6 +668,34 @@ public class MainMenu extends javax.swing.JFrame {
         });
     }
     
+    public void editTheRecipe(Recipe recipe) throws SQLException{
+        try {
+            this.connection = dataSource.getConnection();
+            try (PreparedStatement statement = connection.prepareStatement(
+                    //"INSERT INTO `recipes`(`recipeName`, `cookingSteps`, `imageName`, `difficulty`, `cookingTime`, `ingredients`) VALUES ('a','a','a','a','a','a')"
+                    "UPDATE `recipes` SET `cookingSteps`='"+recipe.getCookingSteps()+"',`imageName`='"+recipe.getImageName()+"',`difficulty`='"+recipe.getDifficulty()+"',`cookingTime`='"+recipe.getCookingTime()+"',`ingredients`=''"+recipe.getIngredients()+"'' WHERE `recipeName`='"+recipe.getName()+"'")) {
+                statement.executeQuery();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (connection != null) {
+                System.out.println("Closing database connection...");
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.out.println("Connection valid: " );
+            }
+        }
+        
+    }
+    
+
+    public void deleteTheRecipe(Recipe recipe) throws SQLException{
+        recipe.setIsDeleted(true);
+    }
     /*
     private javax.swing.JPanel jPanelx;
     private javax.swing.JLabel jLabelx1;

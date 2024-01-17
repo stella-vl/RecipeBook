@@ -6,6 +6,10 @@
 package bg.smg.frames;
 
 import bg.smg.model.Recipe;
+import bg.smg.services.RecipeService;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -15,14 +19,28 @@ import javax.swing.JFrame;
 public class RecipePreviewPanel extends javax.swing.JPanel {
 
     Recipe currentRecipe;
-    JFrame parentFrame;
+    RecipeService recipeService;
     /**
      * Creates new form RecipePreviewPanel
      */
-    public RecipePreviewPanel(JFrame parentFrame, Recipe recipe) {
+    public RecipePreviewPanel() throws SQLException {
         initComponents();
+        this.setVisible(true);
+        jLabelRecipePreviewImg.setIcon(null);
+        jLabel1.setText("");
+        jLabel3.setText("Време за приготвяне: ");
+        
+        
+    }
+    
+    public RecipePreviewPanel(Recipe recipe) throws SQLException {
+        initComponents();
+        currentRecipe = recipe;
         jLabelRecipePreviewImg.setIcon(recipe.getImage());
-        this.parentFrame = parentFrame;
+        jLabel1.setText(recipe.getName());
+        jLabel3.setText("Време за приготвяне: " + recipe.getCookingTime());
+        recipeService = new RecipeService();
+        this.setVisible(true);
         
     }
 
@@ -38,9 +56,9 @@ public class RecipePreviewPanel extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        javax.swing.JLabel jLabelRecipePreviewImg = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabelRecipePreviewImg = new javax.swing.JLabel();
 
         jButton3.setText("Редактирай");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -68,71 +86,68 @@ public class RecipePreviewPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelRecipePreviewImg, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
+                .addComponent(jLabelRecipePreviewImg, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(197, 197, 197)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(245, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton3)
                         .addGap(21, 21, 21)
                         .addComponent(jButton4)
                         .addGap(22, 22, 22)
                         .addComponent(jButton7))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabelRecipePreviewImg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(24, 24, 24))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(94, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(59, 59, 59)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        parentFrame.editTheRecipe(currentRecipe);
+        try {
+            // TODO add your handling code here:
+            recipeService.editRecipe(currentRecipe);
+        } catch (SQLException ex) {
+            Logger.getLogger(RecipePreviewPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        try{
-            RecipeService recipeService = new RecipeService();
-
-            recipeService.deleteRecipe(recipe);
-
-        } catch  (SQLException ex) {
-            JOptionPane.showMessageDialog(this,
-                ex.getMessage(),
-                "Грешка!",
-                JOptionPane.WARNING_MESSAGE);
-            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            // TODO add your handling code here:
+            recipeService.deleteRecipe(currentRecipe);
+        } catch (SQLException ex) {
+            Logger.getLogger(RecipePreviewPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-
+        try {
+            // TODO add your handling code here:
+            recipeService.showDetails(currentRecipe);
+        } catch (SQLException ex) {
+            Logger.getLogger(RecipePreviewPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
 
@@ -142,5 +157,6 @@ public class RecipePreviewPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelRecipePreviewImg;
     // End of variables declaration//GEN-END:variables
 }

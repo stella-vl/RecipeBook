@@ -1,6 +1,7 @@
 
 package bg.smg.services;
 
+import bg.smg.frames.DetailsForm;
 import bg.smg.model.Recipe;
 import bg.smg.util.DBManager;
 import java.sql.Connection;
@@ -76,5 +77,11 @@ public class RecipeService implements RecipeServiceI {
     @Override
     public void deleteRecipe(Recipe recipe) throws SQLException{
         recipe.setIsDeleted(true);
+    }
+    
+    @Override
+    public void showDetails(Recipe recipe) throws SQLException{
+        DetailsForm df = new DetailsForm(recipe);
+        df.setVisible(true);
     }
 }
