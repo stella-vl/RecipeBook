@@ -62,6 +62,7 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -91,7 +92,6 @@ public class MainMenu extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(1024, 680));
         setSize(new java.awt.Dimension(1024, 680));
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 51));
         jPanel3.setMaximumSize(new java.awt.Dimension(1024, 680));
         jPanel3.setPreferredSize(new java.awt.Dimension(1024, 680));
 
@@ -111,7 +111,10 @@ public class MainMenu extends javax.swing.JFrame {
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(202, 202, 202)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(221, 221, 221)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(356, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -121,15 +124,16 @@ public class MainMenu extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(77, 77, 77)
                 .addComponent(jLabel3)
-                .addContainerGap(515, Short.MAX_VALUE))
+                .addGap(85, 85, 85)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(154, Short.MAX_VALUE))
         );
 
-        jScrollPane2.setBackground(new java.awt.Color(153, 255, 0));
+        jScrollPane2.setBackground(new java.awt.Color(242, 242, 242));
         jScrollPane2.setMaximumSize(new java.awt.Dimension(1024, 680));
         jScrollPane2.setPreferredSize(new java.awt.Dimension(1024, 680));
         jScrollPane2.setViewportView(jPanel1);
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 51));
         jPanel1.setMaximumSize(new java.awt.Dimension(1024, 680));
         jPanel1.setMinimumSize(new java.awt.Dimension(1024, 680));
         jPanel1.setPreferredSize(new java.awt.Dimension(1024, 680));
@@ -242,13 +246,12 @@ public class MainMenu extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jPanel1);
         jPanel1.getAccessibleContext().setAccessibleDescription("");
 
-        jScrollPane1.setBackground(new java.awt.Color(102, 255, 255));
+        jScrollPane1.setBackground(new java.awt.Color(242, 242, 242));
         jScrollPane1.setMaximumSize(new java.awt.Dimension(1024, 680));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(1024, 680));
         jScrollPane1.setVerifyInputWhenFocusTarget(false);
         jScrollPane1.setViewportView(jPanel5);
 
-        jPanel5.setBackground(new java.awt.Color(0, 51, 153));
         jPanel5.setMaximumSize(new java.awt.Dimension(1024, 1024));
         jPanel5.setMinimumSize(new java.awt.Dimension(1024, 680));
         jPanel5.setPreferredSize(new java.awt.Dimension(1024, 2048));
@@ -517,6 +520,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
