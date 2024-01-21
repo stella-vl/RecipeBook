@@ -1,11 +1,16 @@
 package bg.smg.frames;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class MainFrame extends javax.swing.JFrame {
 
  
-    public MainFrame() {
+    public MainFrame() throws SQLException {
         initComponents();
         setTitle("Книга с рецепти");
+        add(new RecipePreviewPanel());
     }
 
     /**
@@ -132,7 +137,11 @@ public class MainFrame extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainFrame().setVisible(true);
+                try {
+                    new MainFrame().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

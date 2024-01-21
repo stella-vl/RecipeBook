@@ -9,9 +9,11 @@ import bg.smg.model.Recipe;
 import bg.smg.services.RecipeService;
 import bg.smg.services.UserService;
 import bg.smg.util.DBManager;
+import java.awt.FlowLayout;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -39,19 +41,20 @@ public class MainMenu extends javax.swing.JFrame {
     /**
      * Creates new form MainMenu
      */
-    
     Recipe recipe = new Recipe();
     ImageIcon imgIcon;
     String imgName;
     private DataSource dataSource;
     private Connection connection;
-            
+    ArrayList<Recipe> recipes;
+
     public MainMenu() {
         initComponents();
+        recipes = new ArrayList<>();
         setTitle("Книга с рецепти");
-        jPanel1.setVisible(false);
-        jPanel2.setVisible(false);
         jPanel3.setVisible(true);
+        jPanel1.setVisible(false);
+        jScrollPane1.setVisible(false);
         jPanel4.setVisible(false);
     }
 
@@ -82,10 +85,6 @@ public class MainMenu extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel5 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -100,11 +99,20 @@ public class MainMenu extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jTextField9 = new javax.swing.JTextField();
         jTextField10 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel5 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1024, 680));
+        setPreferredSize(new java.awt.Dimension(1024, 680));
+        setSize(new java.awt.Dimension(1024, 680));
+
+        jPanel3.setMaximumSize(new java.awt.Dimension(1024, 680));
+        jPanel3.setPreferredSize(new java.awt.Dimension(1024, 680));
 
         jLabel3.setText("Добре дошли в книгата с рецепти! Моля изберете опция от менюто по-горе.");
 
@@ -118,22 +126,25 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(124, 124, 124)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(347, 347, 347)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(234, 234, 234)
-                        .addComponent(jLabel4)))
-                .addContainerGap(144, Short.MAX_VALUE))
+                        .addGap(202, 202, 202)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(356, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel4)
-                .addGap(71, 71, 71)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77)
                 .addComponent(jLabel3)
-                .addContainerGap(294, Short.MAX_VALUE))
+                .addContainerGap(515, Short.MAX_VALUE))
         );
+
+        jPanel1.setMaximumSize(new java.awt.Dimension(1024, 680));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1024, 680));
 
         jLabel1.setText("Име:");
 
@@ -191,20 +202,20 @@ public class MainMenu extends javax.swing.JFrame {
                         .addGap(78, 78, 78)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jTextField1)
                             .addComponent(jTextField2)
                             .addComponent(jTextField3)
                             .addComponent(jTextField4)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)))
+                            .addComponent(jTextField5)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(163, 163, 163)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(36, 36, 36))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(210, 210, 210)
+                .addGap(349, 349, 349)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -220,8 +231,8 @@ public class MainMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -237,50 +248,13 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
 
-        jLabel10.setFont(new java.awt.Font("Sitka Heading", 2, 24)); // NOI18N
-        jLabel10.setText("Списък с рецепти");
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 469, Short.MAX_VALUE)
-        );
-
-        jScrollPane1.setViewportView(jPanel5);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(241, 241, 241)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 852, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        jPanel4.setMaximumSize(new java.awt.Dimension(1024, 680));
+        jPanel4.setPreferredSize(new java.awt.Dimension(1024, 680));
 
         jLabel2.setText("Име:");
 
@@ -330,21 +304,22 @@ public class MainMenu extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel2))
+                        .addGap(78, 78, 78)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jLabel15)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel2))
-                                .addGap(78, 78, 78)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                                    .addComponent(jTextField7)
-                                    .addComponent(jTextField8)
-                                    .addComponent(jTextField9)
-                                    .addComponent(jTextField10)))))
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 747, Short.MAX_VALUE)
+                            .addComponent(jTextField7)
+                            .addComponent(jTextField8)
+                            .addComponent(jTextField9)
+                            .addComponent(jTextField10)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(163, 163, 163)
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -364,7 +339,9 @@ public class MainMenu extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton5)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton5)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
@@ -383,8 +360,29 @@ public class MainMenu extends javax.swing.JFrame {
                     .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addComponent(jButton6)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
+
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(1024, 680));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(1024, 680));
+        jScrollPane1.setVerifyInputWhenFocusTarget(false);
+        jScrollPane1.setViewportView(jPanel5);
+
+        jPanel5.setMaximumSize(new java.awt.Dimension(1024, 680));
+        jPanel5.setPreferredSize(new java.awt.Dimension(1024, 680));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1034, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 690, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(jPanel5);
 
         jMenu1.setText("Добавяне на нова рецепта");
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -410,44 +408,52 @@ public class MainMenu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(36, 36, 36)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGap(36, 36, 36)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(897, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 1036, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 903, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(525, 525, 525)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(525, Short.MAX_VALUE)))
+                    .addContainerGap(378, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-   
+
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
         // TODO add your handling code here:
         jPanel1.setVisible(true);
-        jPanel2.setVisible(false);
+        jScrollPane1.setVisible(false);
         jPanel3.setVisible(false);
         jPanel4.setVisible(false);
     }//GEN-LAST:event_jMenu1MouseClicked
@@ -455,114 +461,68 @@ public class MainMenu extends javax.swing.JFrame {
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
         // TODO add your handling code here:
         jPanel1.setVisible(false);
-        jPanel2.setVisible(true);
+        jScrollPane1.setVisible(true);
         jPanel3.setVisible(false);
         jPanel4.setVisible(false);
         jPanel5.setVisible(true);
-        
-        ArrayList<Recipe> recipes = new ArrayList<>();
-        int i = 0;
-        try {
+
         RecipeService recipeService = new RecipeService();
-        dataSource = DBManager.getInstance().getDataSource();
-        connection = dataSource.getConnection();
-        Statement s = connection.createStatement();
-        ResultSet p = s.executeQuery("SELECT * FROM `recipes`");
-        
-        System.out.println(p);
+        recipes = recipeService.getRecipes();
 
-        Recipe rec;
-        while(p.next()) {
-            i++;
-            
-            rec = new Recipe();
-            rec.setName(p.getString("recipeName"));
-            rec.setCookingSteps(p.getString("cookingSteps"));
-            rec.setDifficulty(p.getString("difficulty"));
-            rec.setCookingTime(p.getString("cookingTime"));
-            rec.setIngredients(p.getString("ingredientse"));
-            
-            recipes.add(rec);
-        }
-        s.close();
-        connection.close();
-    } catch (java.sql.SQLException ex) {
+        int y = 10;
+        jPanel5.setLayout(null); // or use an appropriate layout manager
 
-    }
-        System.out.println(recipes.get(1));
-        try {
-            jPanel5.add(new RecipePreviewPanel());
-        } catch (SQLException ex) {
-            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        for (Recipe r : recipes) {
+            RecipePreviewPanel previewPanel = new RecipePreviewPanel(r);
+            previewPanel.setBounds(10, y, 180, 590);
+
+            y += 200;
+            jPanel5.add(previewPanel);
         }
-        try {
-            jPanel5.add(new RecipePreviewPanel());
-        } catch (SQLException ex) {
-            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            jPanel2.add(new RecipePreviewPanel());
-        } catch (SQLException ex) {
-            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Recipe rec = new Recipe();
-            rec.setName("recipeName");
-            rec.setCookingSteps("cookingSteps");
-            rec.setDifficulty("difficulty");
-            rec.setCookingTime("cookingTime");
-            rec.setIngredients("ingredientse");
-            
-            recipes.add(rec);
-        try {
-            jPanel5.add(new RecipePreviewPanel(rec));
-        } catch (SQLException ex) {
-            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            System.out.println(recipes.get(0));
-        
-        for(Recipe r: recipes){
-            try {
-                jPanel5.add(new RecipePreviewPanel(r));
-            } catch (SQLException ex) {
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+
+// Make sure the following lines are added:
+//jScrollPane1.setVisible(true);
+//jPanel5.setVisible(true);
+        jScrollPane1.setViewportView(jPanel5);
+        jPanel5.revalidate();
+        jPanel5.repaint();
+
     }//GEN-LAST:event_jMenu2MouseClicked
 
-   
-    
+
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       // TODO add your handling code here:
-       JFileChooser fileChooser = new JFileChooser();
-       fileChooser.addChoosableFileFilter(new ImageFilter());
-       fileChooser.setAcceptAllFileFilterUsed(false);
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.addChoosableFileFilter(new ImageFilter());
+        fileChooser.setAcceptAllFileFilterUsed(false);
 
-       int option = fileChooser.showOpenDialog(this);
-       if(option == JFileChooser.APPROVE_OPTION){
-          File file = fileChooser.getSelectedFile();
-          try {               
-               Path resourceDirectory = Paths.get("src","resources");
-               String absolutePath = resourceDirectory.toFile().getAbsolutePath();
-              
-               FileChannel src = new FileInputStream(file).getChannel();
-               FileChannel dest = new FileOutputStream(new File(absolutePath+"/"+file.getName())).getChannel();
-               dest.transferFrom(src, 0, src.size());
-               src.close();
-               dest.close();
-               imgName = file.getName().toString();
-               imgIcon = new ImageIcon(absolutePath+"/"+file.getName());
-               jLabel16.setIcon(imgIcon);
-               recipe.setImage(imgIcon);
-               recipe.setImageName(imgName);
-           } catch (Exception ex) {
-               // TODO Auto-generated catch block
-               ex.printStackTrace();
-           }
-       }
+        int option = fileChooser.showOpenDialog(this);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            try {
+                Path resourceDirectory = Paths.get("src", "resources");
+                String absolutePath = resourceDirectory.toFile().getAbsolutePath();
+
+                FileChannel src = new FileInputStream(file).getChannel();
+                FileChannel dest = new FileOutputStream(new File(absolutePath + "/" + file.getName())).getChannel();
+                dest.transferFrom(src, 0, src.size());
+                src.close();
+                dest.close();
+                imgName = file.getName();
+                imgIcon = new ImageIcon(absolutePath + "/" + file.getName());
+                jLabel16.setIcon(imgIcon);
+                recipe.setImage(imgIcon);
+                recipe.setImageName(imgName);
+            } catch (IOException ex) {
+                // TODO Auto-generated catch block
+                Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -571,30 +531,28 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        try{
-        jPanel1.setVisible(false);
-        jPanel2.setVisible(true);
-        jPanel3.setVisible(false);
-        jPanel4.setVisible(false);
-        RecipeService recipeService = new RecipeService();
-        recipe.setName(jTextField1.getText());
-        recipe.setCookingSteps(jTextField4.getText());
-        recipe.setDifficulty(jTextField3.getText());
-        recipe.setCookingTime(jTextField3.getText());
-        recipe.setIngredients(jTextField5.getText());
-        
-        recipeService.addRecipe(recipe);
-        
-        
-        
-        } catch  (SQLException ex) {
+        try {
+            jPanel1.setVisible(false);
+            jScrollPane1.setVisible(true);
+            jPanel3.setVisible(false);
+            jPanel4.setVisible(false);
+            RecipeService recipeService = new RecipeService();
+            recipe.setName(jTextField1.getText());
+            recipe.setCookingSteps(jTextField4.getText());
+            recipe.setDifficulty(jTextField3.getText());
+            recipe.setCookingTime(jTextField3.getText());
+            recipe.setIngredients(jTextField5.getText());
+
+            recipeService.addRecipe(recipe);
+
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this,
                     ex.getMessage(),
                     "Грешка!",
                     JOptionPane.WARNING_MESSAGE);
             Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
@@ -611,20 +569,21 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        try{
-        RecipeService recipeService = new RecipeService();
-        recipe.setName(jTextField6.getText());
-        recipe.setCookingSteps(jTextField9.getText());
-        recipe.setDifficulty(jTextField7.getText());
-        recipe.setCookingTime(jTextField8.getText());
-        recipe.setIngredients(jTextField10.getText());
-        
-        recipeService.editRecipe(recipe);
-        
-        jPanel4.setVisible(false);
-        jPanel2.setVisible(true);
-        
-        } catch  (SQLException ex) {
+        try {
+            RecipeService recipeService = new RecipeService();
+            recipe.setName(jTextField6.getText());
+            recipe.setCookingSteps(jTextField9.getText());
+            recipe.setDifficulty(jTextField7.getText());
+            recipe.setCookingTime(jTextField8.getText());
+            recipe.setIngredients(jTextField10.getText());
+
+            recipeService.editRecipe(recipe);
+
+            jPanel4.setVisible(false);
+            jScrollPane1.setVisible(true);
+            jLabel10.setIcon(imgIcon);
+
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this,
                     ex.getMessage(),
                     "Грешка!",
@@ -667,13 +626,13 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
     }
-    
-    public void editTheRecipe(Recipe recipe) throws SQLException{
+
+    public void editTheRecipe(Recipe recipe) throws SQLException {
         try {
             this.connection = dataSource.getConnection();
             try (PreparedStatement statement = connection.prepareStatement(
                     //"INSERT INTO `recipes`(`recipeName`, `cookingSteps`, `imageName`, `difficulty`, `cookingTime`, `ingredients`) VALUES ('a','a','a','a','a','a')"
-                    "UPDATE `recipes` SET `cookingSteps`='"+recipe.getCookingSteps()+"',`imageName`='"+recipe.getImageName()+"',`difficulty`='"+recipe.getDifficulty()+"',`cookingTime`='"+recipe.getCookingTime()+"',`ingredients`=''"+recipe.getIngredients()+"'' WHERE `recipeName`='"+recipe.getName()+"'")) {
+                    "UPDATE `recipes` SET `cookingSteps`='" + recipe.getCookingSteps() + "',`imageName`='" + recipe.getImageName() + "',`difficulty`='" + recipe.getDifficulty() + "',`cookingTime`='" + recipe.getCookingTime() + "',`ingredients`=''" + recipe.getIngredients() + "'' WHERE `recipeName`='" + recipe.getName() + "'")) {
                 statement.executeQuery();
             }
         } catch (SQLException throwables) {
@@ -686,31 +645,15 @@ public class MainMenu extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                System.out.println("Connection valid: " );
+                System.out.println("Connection valid: ");
             }
         }
-        
-    }
-    
 
-    public void deleteTheRecipe(Recipe recipe) throws SQLException{
+    }
+
+    public void deleteTheRecipe(Recipe recipe) throws SQLException {
         recipe.setIsDeleted(true);
     }
-    /*
-    private javax.swing.JPanel jPanelx;
-    private javax.swing.JLabel jLabelx1;
-    private javax.swing.JLabel jLabelx2;
-    private javax.swing.JLabel jLabelx3;
-    private javax.swing.JLabel jLabelx4;
-    private javax.swing.JLabel jLabelx5;
-    private javax.swing.JLabel jLabelx6;
-    private javax.swing.JTextField jTextFieldx1;
-    private javax.swing.JTextField jTextFieldx2;
-    private javax.swing.JTextField jTextFieldx3;
-    private javax.swing.JTextField jTextFieldx4;
-    private javax.swing.JTextField jTextFieldx5;
-    private ImageIcon recipeImage;
-*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -737,7 +680,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -753,18 +695,4 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
-}
-class MyPanel extends JPanel {
-    private Recipe recipe;
-
-    public MyPanel(Recipe recipe) {
-        this.recipe = recipe;
-        // Initialize and add components to your panel using dbObject
-        JLabel labelName = new JLabel("Име" + recipe.getName());
-        add(labelName);
-        JLabel labelImage = new JLabel(recipe.getImage());
-        add(labelImage);
-        //JLabel label = new JLabel("Име" + recipe.getName());
-        
-    }
 }

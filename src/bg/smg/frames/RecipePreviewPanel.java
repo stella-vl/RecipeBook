@@ -10,8 +10,6 @@ import bg.smg.services.RecipeService;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
-
 /**
  *
  * @author smg25C9
@@ -23,17 +21,16 @@ public class RecipePreviewPanel extends javax.swing.JPanel {
     /**
      * Creates new form RecipePreviewPanel
      */
-    public RecipePreviewPanel() throws SQLException {
+    public RecipePreviewPanel() {
         initComponents();
-        this.setVisible(true);
         jLabelRecipePreviewImg.setIcon(null);
         jLabel1.setText("");
-        jLabel3.setText("Време за приготвяне: ");
+        jLabel3.setText("");
         
         
     }
     
-    public RecipePreviewPanel(Recipe recipe) throws SQLException {
+    public RecipePreviewPanel(Recipe recipe){
         initComponents();
         currentRecipe = recipe;
         jLabelRecipePreviewImg.setIcon(recipe.getImage());
@@ -59,6 +56,7 @@ public class RecipePreviewPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabelRecipePreviewImg = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         jButton3.setText("Редактирай");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -81,6 +79,8 @@ public class RecipePreviewPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel2.setText("Време за приготвяне:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,10 +89,15 @@ public class RecipePreviewPanel extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(jLabelRecipePreviewImg, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -116,8 +121,9 @@ public class RecipePreviewPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)))
                             .addComponent(jLabelRecipePreviewImg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(24, 24, 24))
         );
@@ -156,6 +162,7 @@ public class RecipePreviewPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelRecipePreviewImg;
     // End of variables declaration//GEN-END:variables
