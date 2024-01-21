@@ -15,5 +15,9 @@ cookingSteps varchar(333),
 imageName varchar(32),
 difficulty varchar(32),
 cookingTime varchar(32),
-ingredients varchar(132);
+ingredients varchar(132),
+isDeleted tinyint(4) NOT NULL DEFAULT '0'
 );
+
+
+

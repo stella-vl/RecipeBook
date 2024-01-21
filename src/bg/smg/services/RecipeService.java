@@ -1,8 +1,8 @@
-
 package bg.smg.services;
 
 import bg.smg.frames.DetailsForm;
 import bg.smg.frames.MainMenu;
+import bg.smg.frames.RecipePreviewPanel;
 import bg.smg.model.Recipe;
 import bg.smg.util.DBManager;
 import java.sql.Connection;
@@ -58,6 +58,8 @@ public class RecipeService implements RecipeServiceI {
         }
     }
     
+    
+    
     public ArrayList<Recipe> getRecipes(){
         ArrayList<Recipe> recipes = new ArrayList<>();
         ResultSet p;
@@ -77,8 +79,11 @@ public class RecipeService implements RecipeServiceI {
                 rec.setDifficulty(p.getString("difficulty"));
                 rec.setCookingTime(p.getString("cookingTime"));
                 rec.setIngredients(p.getString("ingredients"));
-
-                recipes.add(rec);
+                rec.setIsDeleted(p.getInt("isDeleted"));
+                if(p.getInt("isDeleted") == 0){
+                    recipes.add(rec);
+                }
+                
             }
             try {
                 s.close();
@@ -105,8 +110,8 @@ public class RecipeService implements RecipeServiceI {
         try {
             this.connection = dataSource.getConnection();
             try (PreparedStatement statement = connection.prepareStatement(
-                    //"INSERT INTO `recipes`(`recipeName`, `cookingSteps`, `imageName`, `difficulty`, `cookingTime`, `ingredients`) VALUES ('a','a','a','a','a','a')"
-                    "UPDATE `recipes` SET `cookingSteps`='"+recipe.getCookingSteps()+"',`imageName`='"+recipe.getImageName()+"',`difficulty`='"+recipe.getDifficulty()+"',`cookingTime`='"+recipe.getCookingTime()+"',`ingredients`=''"+recipe.getIngredients()+"'' WHERE `recipeName`='"+recipe.getName()+"'")) {
+                    //"UPDATE `recipes` SET `recipeName`='"+recipe.getName()+"',`cookingSteps`='"+recipe.getCookingSteps()+"',`difficulty`='"+recipe.getDifficulty()+"',`cookingTime`='"+recipe.getCookingTime()+"',`ingredients`='"+recipe.getIngredients()+"' WHERE `id`="+recipe.getId()+""
+                    "UPDATE `recipes` SET `recipeName` = '"+recipe.getName()+"', `cookingSteps`='"+recipe.getCookingSteps()+"',`difficulty`='"+recipe.getDifficulty()+"',`cookingTime`='"+recipe.getCookingTime()+"',`ingredients`='"+recipe.getIngredients()+"' WHERE `id`="+recipe.getId()+"")) {
                 statement.executeQuery();
             }
         } catch (SQLException throwables) {
@@ -122,12 +127,31 @@ public class RecipeService implements RecipeServiceI {
                 System.out.println("Connection valid: " );
             }
         }
-        
-    }
+}
     
     @Override
     public void deleteRecipe(Recipe recipe) throws SQLException{
-        recipe.setIsDeleted(true);
+        recipe.setIsDeleted(1);
+        try {
+            this.connection = dataSource.getConnection();
+            try (PreparedStatement statement = connection.prepareStatement(
+                    //"UPDATE `recipes` SET `recipeName`='"+recipe.getName()+"',`cookingSteps`='"+recipe.getCookingSteps()+"',`difficulty`='"+recipe.getDifficulty()+"',`cookingTime`='"+recipe.getCookingTime()+"',`ingredients`='"+recipe.getIngredients()+"' WHERE `id`="+recipe.getId()+""
+                    "UPDATE `recipes` SET `isDeleted` = 1 WHERE `id`="+recipe.getId()+"")) {
+                statement.executeQuery();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (connection != null) {
+                System.out.println("Closing database connection...");
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.out.println("Connection valid: " );
+            }
+        }
     }
     
     @Override

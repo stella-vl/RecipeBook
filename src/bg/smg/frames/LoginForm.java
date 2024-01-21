@@ -47,6 +47,8 @@ public class LoginForm extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(460, 260));
+        setSize(new java.awt.Dimension(460, 260));
 
         jLabel2.setFont(new java.awt.Font("Sitka Heading", 2, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

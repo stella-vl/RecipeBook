@@ -1,6 +1,10 @@
 package bg.smg.model;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import javax.swing.ImageIcon;
 
 public class Recipe {
@@ -12,7 +16,7 @@ public class Recipe {
     private String difficulty;
     private String cookingTime;
     private String ingredients;
-    private boolean isDeleted;
+    private int isDeleted;
     //private ArrayList<Ingredient> ingredients;
 
     public Recipe() {
@@ -23,7 +27,7 @@ public class Recipe {
         this.difficulty = "";
         this.cookingTime = "";
         this.ingredients = "";
-        isDeleted = false;
+        isDeleted = 0;
         //this.ingredients = new ArrayList<>();
     }
 
@@ -35,7 +39,7 @@ public class Recipe {
         this.difficulty = difficulty;
         this.cookingTime = cooking_time;
         this.ingredients = ingredients;
-        isDeleted = false;
+        isDeleted = 0;
     }
 
     public int getId() {
@@ -66,18 +70,41 @@ public class Recipe {
         return imageName;
     }
 
-    public void setImageName(String image_name) {
-        this.imageName = image_name;
+    public void setImageName(String imageName) {
+        
+        this.imageName = imageName;
+    }
+    
+    public ImageIcon getIcon(ImageIcon imageI) {
+    //promenq razmerite na kartinata taka, che da e podhodqshta za ImageIcon
+    Image img = imageI.getImage();
+    Image newImage = img.getScaledInstance(210, 144, java.awt.Image.SCALE_SMOOTH);
+    ImageIcon icon1 = new ImageIcon(newImage);
+    return icon1;
     }
     
     public ImageIcon getImage() {
-        return image;
+        return getIcon(this.image);
     }
 
     public void setImage(ImageIcon image) {
-        this.image = image;
+        this.image = getIcon(image);
+    }
+    
+    public ImageIcon getImageFromRes(Recipe recipe) {
+        //String path = ("./Source Packages/resources/" + imageName);
+        //String n = recipe.getImageName();
+        String path = "resources/" + recipe.getImageName();
+        System.out.println(path);
+        ImageIcon img = new ImageIcon(getClass().getClassLoader().getResource(path));
+        return img;
+       
+        
     }
 
+   
+
+    
     public String getDifficulty() {
         return difficulty;
     }
@@ -102,11 +129,11 @@ public class Recipe {
         this.ingredients = ingredients;
     }
     
-    public boolean getIsDeleted(){
+    public int getIsDeleted(){
         return isDeleted;
     }
     
-    public void setIsDeleted(boolean isDeleted){
+    public void setIsDeleted(int isDeleted){
         this.isDeleted = isDeleted;
     }
 /*
