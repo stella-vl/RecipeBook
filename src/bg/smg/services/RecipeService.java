@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
+import javax.swing.ImageIcon;
 
 
 public class RecipeService implements RecipeServiceI {
@@ -61,16 +62,18 @@ public class RecipeService implements RecipeServiceI {
         ArrayList<Recipe> recipes = new ArrayList<>();
         ResultSet p;
         try {
-            dataSource = DBManager.getInstance().getDataSource();
-            connection = dataSource.getConnection();
+            this.connection = dataSource.getConnection();
             Statement s = connection.createStatement();
             p = s.executeQuery("SELECT * FROM `recipes`");
-            //System.out.println(p);
+            
             Recipe rec;
             while (p.next()) {
                 rec = new Recipe();
+                rec.setId(p.getInt("id"));
                 rec.setName(p.getString("recipeName"));
                 rec.setCookingSteps(p.getString("cookingSteps"));
+                String path = "./resources/" + p.getString("imageName");
+                rec.setImage(new ImageIcon(path));
                 rec.setDifficulty(p.getString("difficulty"));
                 rec.setCookingTime(p.getString("cookingTime"));
                 rec.setIngredients(p.getString("ingredients"));
